@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.board.mapper.BoardMapper">
+ 
+ 	<!-- 게시판 전체 조회 -->
+ 	<select id="selectBoardList" resultType="com.spring.board.vo.BoardVO">
+        SELECT
+            u.name,
+            b.board_no AS boardNo,
+         	b.title,
+         	b.write_date AS writeDate
+        FROM board b
+        INNER JOIN user u
+        ON b.user_no = u.user_no
+    </select>
+    
+    <!-- 게시판 등록 -->
+    <insert id="insertBoard" parameterType="com.spring.board.vo.BoardVO">
+        INSERT INTO emp
+        (
+            user_no,
+            content,
+            title
+        )
+        VALUES
+        (
+             1,
+            #{content},
+            #{title}
+        )
+    </insert>
+    
+    <!-- 게시판 상세 조회 -->
+    <select id="selectBoardListFindByNo" resultType="com.spring.board.vo.BoardVO">
+    	SELECT
+    		board_no AS boardNo,
+         	title,
+         	content
+        FROM board
+        WHERE board_no = #{boardNo}
+    </select>
+    
+    <!-- 게시글 수정  -->
+    <update id="updateBoardFindByNo" parameterType="com.spring.board.vo.BoardVO">
+    	UPDATE board
+        SET
+	        title = #{password},
+	        content = #{content}
+        WHERE board_no = #{boardNo}
+    </update>
+    
+    <!-- 게시글 삭제 -->
+ 	<delete id="deleteBoardFindByNo">
+ 		DELETE
+        FROM board
+        WHERE board_no = #{boardNo}
+ 	</delete>
+
+</mapper>
