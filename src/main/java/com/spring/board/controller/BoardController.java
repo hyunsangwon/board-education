@@ -97,4 +97,30 @@ public class BoardController {
 	}
 	
 	
+	/**
+	 * @Author : sangwon hyun
+	 * @Date : 2019. 11. 20.
+	 * @return : String
+	 * @param : Model, String
+	 * @throws : 
+	 * 게시판 삭제
+	 */
+	@RequestMapping(value= "/board/remove/{boardNo}", method= RequestMethod.GET)
+	public String doDeleteboard(Model model,@PathVariable("boardNo") String boardNo) {
+		return null;
+	}
+	
+	/**
+	 * @Author : sangwon hyun
+	 * @Date : 2019. 11. 20.
+	 * @return : Boolean
+	 * @param : BoardVO
+	 * @throws : 
+	 * 게시판 업데이트
+	 */
+	@RequestMapping(value= "/board/update", method= RequestMethod.POST)
+	public @ResponseBody Boolean doBoardUpdate(@RequestBody BoardVO boardVO) {
+		return null;
+	}
+		
 }
