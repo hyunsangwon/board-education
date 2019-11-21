@@ -19,6 +19,7 @@
 <script type="text/javascript" src="${cPath}/resources/js/sb-admin.min.js"></script>
 <script type="text/javascript" src="${cPath}/resources/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
+
 	$(function() {
 		$("#boardList tr").hover(
 				function () {
@@ -38,6 +39,12 @@
 	function load_board_detail(boardNo){
 		console.log('게시판 번호 ===>'+boardNo);
 		location.href = "${cPath}/board/detail/"+boardNo;
+	}
+	
+	/* 페이징  */
+	function do_page(pageNum){
+		 console.log('페이지 이동 ===> '+pageNum);
+		 location.href = "${cPath}/board/page/"+pageNum+"/rows/"+10;
 	}
 	
 </script>
@@ -159,8 +166,11 @@
           </li>
           <li class="breadcrumb-item active">Overview</li>
         </ol>
-
-
+        
+		<div class="col-sm-offset-2 col-sm-10" style="margin: 10px;">
+			<a class="btn btn-primary" style="width: 150px;" href="${cPath}/board/write">게시판 작성</a>
+		</div>
+		
         <!-- DataTables Example -->
         <div class="card mb-3">
           <div class="card-header">
@@ -199,23 +209,28 @@
           </div>
           <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
-
-		<div class="col-sm-offset-2 col-sm-10" style="margin: 10px;">
-			<a class="btn btn-primary" style="width: 150px;" href="${cPath}/board/write">게시판 작성</a>
+		<!--Paging -->
+		<div class="row">
+				<div class="col-sm-12 col-md-7">
+					<ul class="pagination">
+						<c:if test="${pageHandler.prev}">
+							<tr>
+								<li class="page-item"><a class="page-link" href="javascript:do_page(${pageHandler.getStartPage()-1});">Previous</a></li>
+							</tr>
+						</c:if>
+						<c:forEach begin="${pageHandler.getStartPage()}" end="${pageHandler.getEndPage()}" var="idx" >
+							<li class="page-item"><a class="page-link" href="javascript:do_page(${idx});">${idx}</a></li>
+						</c:forEach>
+						<c:if test="${pageHandler.next}">
+							<tr>
+								<li class="page-item"><a class="page-link" href="javascript:do_page(${pageHandler.getEndPage()+1});">Next</a></li>
+							</tr>
+						</c:if>
+					</ul>
+				</div>
 		</div>
-
-	   <!--Footer -->	
-      <footer class="sticky-footer">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright © Your Website 2019</span>
-          </div>
-        </div>
-      </footer>
-
       </div>
       <!-- /.container-fluid -->
-
     </div>
     <!-- /.content-wrapper -->
   </div>

@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.board.conf.PageHandler;
 import com.spring.board.mapper.BoardMapper;
 import com.spring.board.vo.BoardVO;
+import com.spring.board.vo.PageVO;
 
 @Service
 public class BoardService {
@@ -22,9 +24,13 @@ public class BoardService {
 	 * @param : 
 	 * @throws : 
 	 */
-	public List<BoardVO> getBoardList(){
+	public List<BoardVO> getBoardList(int limitCount,int contentNum){
 		
-		List<BoardVO> list = boardMapper.selectBoardList();
+		PageVO pageVO = new PageVO();
+		pageVO.setLimitCount(limitCount);
+		pageVO.setContentNum(contentNum);
+		
+		List<BoardVO> list = boardMapper.selectBoardList(pageVO);
 		int listSize = list.size();
 
 		for(int i=0; i<listSize; i++) {
@@ -99,6 +105,25 @@ public class BoardService {
 		if(rows > 0) flag = true;
 		
 		return flag;
+	}
+	
+	
+	public PageHandler doPage(int pageNum, int rowCnt) {
+		
+		int totalCnt = boardMapper.totalCnt();
+		int contentNum = rowCnt; //몇줄 보일껀지
+		
+		PageHandler pageHandler = new PageHandler();
+		pageHandler.setTotalcount(totalCnt);
+		pageHandler.setPagenum(pageNum);
+		pageHandler.setContentnum(contentNum);
+		pageHandler.setCurrentblock(pageNum);
+		pageHandler.setLastblock(pageHandler.getTotalcount());
+		pageHandler.prevnext(pageNum);
+		pageHandler.setStartPage(pageHandler.getCurrentblock());
+		pageHandler.setEndPage(pageHandler.getLastblock(),pageHandler.getCurrentblock());
+		
+		return pageHandler;
 	}
 	
 }

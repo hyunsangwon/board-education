@@ -12,6 +12,8 @@
         FROM board b
         INNER JOIN user u
         ON b.user_no = u.user_no
+        ORDER BY board_no DESC 
+	    LIMIT #{limitCount},#{contentNum}
     </select>
     
     <!-- 게시글 총 카운트  -->

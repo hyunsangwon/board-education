@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.board.conf.BoardFlag;
+import com.spring.board.conf.PageHandler;
 import com.spring.board.service.BoardService;
 import com.spring.board.vo.BoardVO;
 
@@ -38,10 +39,31 @@ public class BoardController {
 		
 		logger.debug("[ Call / - GET ]");
 		
-		List<BoardVO> list = boardService.getBoardList();
+		List<BoardVO> list = boardService.getBoardList(0,10);
 		logger.debug("[ list size =======> ]"+list.size());
+		PageHandler pageHandler = boardService.doPage(1, 10);
 		
 		model.addAttribute("boardList",list);
+		model.addAttribute("pageHandler",pageHandler);
+		
+		return "index";
+	}
+	
+	@RequestMapping(value = "/board/page/{pageNo}/rows/{contentNum}", method = RequestMethod.GET)
+	public String doPage(Model model,@PathVariable("pageNo") int pageNo, @PathVariable("contentNum") int contentNum) {
+		
+		logger.debug("[ Call /board/page/"+pageNo+"/rows/"+contentNum+" - GET ]");
+		logger.debug("==> Parameters        : " + pageNo);
+		logger.debug("==> Parameters        : " + contentNum);
+		
+		int limitCount=((pageNo - 1 ) * 10);	
+		List<BoardVO> list = boardService.getBoardList(limitCount,contentNum);
+		logger.debug("[ list size =======> ]"+list.size());
+		PageHandler pageHandler = boardService.doPage(pageNo, contentNum);
+		
+		model.addAttribute("boardList",list);
+		model.addAttribute("pageHandler",pageHandler);
+		
 		return "index";
 	}
 

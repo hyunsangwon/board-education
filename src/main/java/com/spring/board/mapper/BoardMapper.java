@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.spring.board.vo.BoardVO;
+import com.spring.board.vo.PageVO;
 
 @Repository
 public interface BoardMapper {
@@ -18,7 +19,7 @@ public interface BoardMapper {
 	 * @throws : 
 	 * 게시판 전체 조회
 	 */
-	public List<BoardVO> selectBoardList();
+	public List<BoardVO> selectBoardList(PageVO pageVo);
 	
 	/**
 	 * @Author : sangwon Hyun
@@ -72,6 +73,6 @@ public interface BoardMapper {
 	 * @throws : 
 	 * 게시글 총 갯수
 	 */
-	public int totaslCnt();
+	public int totalCnt();
 	
 }
