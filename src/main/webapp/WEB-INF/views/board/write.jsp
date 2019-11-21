@@ -32,7 +32,6 @@
 		if(title == '' || content == ''){
 			alert('게시글을 입력해주세요');
 		}else{
-			
 				var jsonData = {
 					"title" : title,
 					"content" : content
@@ -41,23 +40,70 @@
 				$.ajax({
 					type: 'POST',
 					contentType : "application/json;",
-					url:'/board/write',
+					url:'/board/update',
 					data: JSON.stringify(jsonData),
 					dataType: 'text',
 					success: function(data){
 						console.log(data);
+						if(data == 'true'){
+							alert('게시글이 등록되었습니다.');
+							location.href = "${cPath}/";
+						}
 					},
 					error:function(xhr,status,error){
 						console.log('error:'+error);
 					}
 				});			
 		}
-	}
+	}//end fun
 	
 	//홈으로
 	function load_home(){
 		location.href = "${cPath}/";
-	}
+	}//end fun
+	
+	/*게시글 삭제 */
+	function delete_board(boardNo){
+		console.log('게시판 번호 ===>'+boardNo);
+		if(confirm('해당 게시글을 삭제하시겠습니까?')){
+			location.href = "${cPath}/board/remove/"+boardNo;
+		}
+	}//end fun
+	
+	/*게시글 수정 */
+	function ajax_update(boardNo){
+		console.log('게시판 번호 ===>'+boardNo);
+		if(confirm('해당 게시글을 수정하시겠습니까?')){
+			
+			var title = $('#title').val();
+			var content = $('#content').val();
+			
+			if(title == '' || content == ''){
+				alert('게시글을 입력해주세요');
+			}else{
+					var jsonData = {
+						"title" : title,
+						"content" : content
+					}
+					$.ajax({
+						type: 'POST',
+						contentType : "application/json;",
+						url:'/board/write',
+						data: JSON.stringify(jsonData),
+						dataType: 'text',
+						success: function(data){
+							console.log(data);
+							if(data == 'true'){
+								alert('게시글이 수정되었습니다.');
+							}
+						},
+						error:function(xhr,status,error){
+							console.log('error:'+error);
+						}
+					});
+			}
+		}
+	}//end fun
 	
 </script>
 </head>
@@ -208,8 +254,8 @@
 							<button class="btn btn-secondary" type="button" style="width: 100px;" onclick="ajax_submit();">글작성</button>
 						</c:if>
 						<c:if test="${FLAG == 'V'}">
-							<button class="btn btn-danger" type="button" style="width: 150px;">삭제</button>
-							<button class="btn btn-info" type="button" style="width: 150px;">수정</button>
+							<button class="btn btn-danger" type="button" style="width: 150px;" onclick="delete_board(${boardVO.boardNo});">삭제</button>
+							<button class="btn btn-info" type="button" style="width: 150px;" onclick="ajax_update(${boardVO.boardNo});">수정</button>
 						</c:if>
 						<button class="btn btn-primary" type="button" style="width: 150px;" onclick="load_home();">홈으로</button>
 					</div>

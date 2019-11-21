@@ -106,8 +106,12 @@ public class BoardController {
 	 * 게시판 삭제
 	 */
 	@RequestMapping(value= "/board/remove/{boardNo}", method= RequestMethod.GET)
-	public String doDeleteboard(Model model,@PathVariable("boardNo") String boardNo) {
-		return null;
+	public Boolean doDeleteboard(Model model,@PathVariable("boardNo") String boardNo) {
+		
+		logger.debug("[ Call /board/remove/"+boardNo+" - GET ]");
+		logger.debug("==> Parameters        : " + boardNo);
+		
+		return boardService.deleteBoardFindByNo(boardNo);
 	}
 	
 	/**
@@ -120,7 +124,12 @@ public class BoardController {
 	 */
 	@RequestMapping(value= "/board/update", method= RequestMethod.POST)
 	public @ResponseBody Boolean doBoardUpdate(@RequestBody BoardVO boardVO) {
-		return null;
+		
+		logger.debug("[ Call /board/write - POST ]");
+		logger.debug("==> Parameters  Title     : " + boardVO.getTitle());
+		logger.debug("==> Parameters  Content      : " + boardVO.getContent());
+		
+		return boardService.updateBoardFindByNo(boardVO);
 	}
 		
 }

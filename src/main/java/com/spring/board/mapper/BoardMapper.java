@@ -63,4 +63,15 @@ public interface BoardMapper {
 	 */
 	public int deleteBoardFindByNo(@Param("boardNo") String boardNo);
 	
+	
+	/**
+	 * @Author : sangwon hyun
+	 * @Date : 2019. 11. 21.
+	 * @return : int
+	 * @param : 
+	 * @throws : 
+	 * 게시글 총 갯수
+	 */
+	public int totaslCnt();
+	
 }

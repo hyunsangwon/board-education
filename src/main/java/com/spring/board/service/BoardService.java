@@ -65,4 +65,40 @@ public class BoardService {
 		return boardMapper.selectBoardListFindByNo(boardNo);
 	}
 	
+	
+	/**
+	 * @Author : sangwon hyun
+	 * @Date : 2019. 11. 21.
+	 * @return : boolean
+	 * @param : BoardVO
+	 * @throws : 
+	 */
+	public boolean updateBoardFindByNo(BoardVO boardVO) {
+		
+		int rows =  boardMapper.insertBoard(boardVO);
+		boolean flag = false;
+		
+		if(rows > 0) flag = true;
+		
+		return flag;
+	}
+	
+	
+	/**
+	 * @Author : sangwon hyun
+	 * @Date : 2019. 11. 21.
+	 * @return : boolean
+	 * @param : String
+	 * @throws : 
+	 */
+	public boolean deleteBoardFindByNo(String boardNo) {
+		
+		int rows =  boardMapper.deleteBoardFindByNo(boardNo);
+		boolean flag = false;
+		
+		if(rows > 0) flag = true;
+		
+		return flag;
+	}
+	
 }

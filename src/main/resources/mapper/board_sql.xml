@@ -14,9 +14,16 @@
         ON b.user_no = u.user_no
     </select>
     
+    <!-- 게시글 총 카운트  -->
+    <select id="totalCnt" resultType="integer">
+    	SELECT
+    		COUNT(*)
+    	FROM board
+    </select>
+    
     <!-- 게시판 등록 -->
     <insert id="insertBoard" parameterType="com.spring.board.vo.BoardVO">
-        INSERT INTO emp
+        INSERT INTO board
         (
             user_no,
             content,
